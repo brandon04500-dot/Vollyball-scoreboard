@@ -4,104 +4,84 @@
 
 ## 🚀 주요 기능
 
-- **8개 구장 동시 관리**: 각 구장별 독립적인 스코어보드 운영
-- **실시간 점수 업데이트**: 심판용 컨트롤패널과 송출용 디스플레이 동기화
-- **통합 대시보드**: 모든 구장 상태를 한눈에 확인
-- **OBS 연동**: 브라우저 소스로 방송 송출 가능
+- **8개 구장 동시 관리**: 각 구장별 독립적인 스코어보드
+- **실시간 업데이트**: WebSocket을 통한 실시간 점수 동기화
+- **OBS 연동**: 브라우저 소스로 OBS에서 바로 사용 가능
+- **반응형 디자인**: 다양한 화면 크기에 최적화
+- **관리자 대시보드**: 통합 관리 인터페이스
 
 ## 📁 프로젝트 구조
 
 ```
 vollyball/
-├── index.html              # 메인 페이지
-├── login.html              # 로그인 페이지
-├── dashboard.html          # 대시보드
-├── server.py               # Python 서버
-├── server_flask.py         # Flask 서버 (대안)
-├── courts/                 # 구장별 파일
-│   ├── 1/courts/001/      # 1구장
-│   ├── 2/courts/002/      # 2구장
-│   └── ...                # 3-8구장
-└── js/                     # 공통 JavaScript
+├── courts/                    # 구장별 파일
+│   ├── 1/courts/001/         # 1구장
+│   ├── 2/courts/002/         # 2구장
+│   └── ...
+├── js/                       # 공통 JavaScript
+├── dashboard.html            # 관리자 대시보드
+├── login.html               # 로그인 페이지
+├── server.py                # Python 서버
+└── index.html               # 메인 페이지
 ```
 
 ## 🛠️ 설치 및 실행
 
 ### 로컬 실행
 
-1. **Python 서버 실행**:
+1. **Python 서버 실행**
    ```bash
    python server.py
    ```
 
-2. **브라우저에서 접속**:
+2. **브라우저에서 접속**
    - 메인 페이지: http://localhost:8000
+   - 관리자 로그인: http://localhost:8000/login.html
    - 1구장: http://localhost:8000/courts/1/courts/001/display.html
-   - 2구장: http://localhost:8000/courts/2/courts/002/display.html
-   - ... (3-8구장 동일한 패턴)
 
 ### GitHub Pages 배포
 
-이 프로젝트는 GitHub Pages를 통해 자동으로 배포됩니다.
+이 프로젝트는 GitHub Actions를 통해 자동으로 GitHub Pages에 배포됩니다.
 
-- **라이브 사이트**: https://[사용자명].github.io/vollyball
+- **라이브 사이트**: https://[사용자명].github.io/[저장소명]
 - **자동 배포**: main 브랜치에 푸시할 때마다 자동 업데이트
 
 ## 🎮 사용법
 
-### 1. 로그인
-- 메인 페이지에서 "로그인하기" 클릭
-- 구장 번호와 비밀번호 입력
+### 관리자
+1. `login.html`에서 로그인
+2. 대시보드에서 모든 구장 상태 확인
+3. 각 구장별 설정 및 관리
 
-### 2. 대시보드
-- 컨트롤패널: 심판용 스코어보드 관리
-- 송출용 페이지: 방송/관중용 디스플레이
+### 구장 운영자
+1. 해당 구장의 `control.html` 접속
+2. 점수, 세트, 타임아웃 등 입력
+3. 실시간으로 디스플레이에 반영
 
-### 3. 스코어보드 기능
-- **점수 관리**: 팀별 점수 증가/감소
-- **세트 점수**: 세트별 점수 관리
-- **타임아웃**: 팀별 타임아웃 표시
-- **비디오 판독**: 비디오 판독 상태 표시
-- **코트체인지**: 코트 교체 표시
+### OBS 연동
+1. OBS에서 "브라우저 소스" 추가
+2. URL에 해당 구장의 `display.html` 주소 입력
+3. 해상도 설정 (권장: 1920x1080)
 
 ## 🔧 기술 스택
 
 - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Backend**: Python (http.server)
-- **배포**: GitHub Pages
-- **자동화**: GitHub Actions
+- **Backend**: Python 3.x (http.server)
+- **배포**: GitHub Pages + GitHub Actions
+- **실시간 통신**: WebSocket (향후 구현 예정)
 
-## 📱 OBS 연동
-
-OBS Studio에서 브라우저 소스로 사용:
-
-1. OBS에서 "브라우저 소스" 추가
-2. URL에 해당 구장의 display.html 주소 입력
-3. 해상도: 1920x1080 (또는 원하는 해상도)
-4. 실시간으로 스코어보드 업데이트 확인
-
-## 🤝 기여하기
-
-1. 이 저장소를 포크합니다
-2. 새로운 기능 브랜치를 생성합니다 (`git checkout -b feature/새기능`)
-3. 변경사항을 커밋합니다 (`git commit -am '새 기능 추가'`)
-4. 브랜치에 푸시합니다 (`git push origin feature/새기능`)
-5. Pull Request를 생성합니다
-
-## 📄 라이선스
+## 📝 라이선스
 
 이 프로젝트는 MIT 라이선스 하에 배포됩니다.
 
-## 🆘 문제 해결
+## 🤝 기여하기
 
-### 서버가 시작되지 않는 경우
-- 포트 8000이 이미 사용 중인지 확인
-- Python이 설치되어 있는지 확인
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### 스코어보드가 업데이트되지 않는 경우
-- 브라우저 캐시를 지워보세요
-- 네트워크 연결을 확인하세요
+## 📞 문의
 
-## 📞 지원
-
-문제가 발생하거나 기능 요청이 있으시면 GitHub Issues를 통해 알려주세요.
+프로젝트에 대한 문의사항이 있으시면 이슈를 생성해 주세요.

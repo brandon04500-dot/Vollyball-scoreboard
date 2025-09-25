@@ -21,10 +21,14 @@ wheels/
 *.egg
 MANIFEST
 
-# Virtual Environment
-venv/
+# 환경 변수
+.env
+.venv
 env/
+venv/
 ENV/
+env.bak/
+venv.bak/
 
 # IDE
 .vscode/
@@ -35,21 +39,22 @@ ENV/
 
 # OS
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Logs
+# 로그 파일
 *.log
 
-# Temporary files
+# 임시 파일
 *.tmp
 *.temp
 
-# Node modules (if any)
+# Node.js (만약 사용한다면)
 node_modules/
-
-# Environment variables
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

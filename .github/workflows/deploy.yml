@@ -1,13 +1,13 @@
-name: 🚀 GitHub Pages 자동 배포
+name: Deploy to GitHub Pages
 
-# main 브랜치에 푸시될 때마다 실행
+# main 브랜치에 푸시될 때마다 자동으로 배포
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-# 작업 권한 설정
+# GitHub Pages에 배포 권한 부여
 permissions:
   contents: read
   pages: write
@@ -19,36 +19,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 배포 작업
+  # 정적 사이트 빌드 및 배포
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 코드 체크아웃
+      - name: Checkout
         uses: actions/checkout@v4
         
-      - name: 🐍 Python 설정
-        uses: actions/setup-python@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          python-version: '3.9'
+          # 현재 디렉토리의 모든 파일을 업로드
+          path: '.'
           
-      - name: 📦 의존성 설치
-        run: |
-          python -m pip install --upgrade pip
-          pip install flask
-          
-      - name: 🧪 테스트 실행
-        run: |
-          echo "테스트 실행 중..."
-          # 여기에 테스트 코드 추가 가능
-          
-      - name: 🏗️ 정적 파일 준비
-        run: |
-          echo "정적 파일 준비 중..."
-          # 필요한 경우 빌드 스크립트 실행
-          
-      - name: 📤 GitHub Pages 배포
-        uses: actions/deploy-pages@v3
+      - name: Deploy to GitHub Pages
         id: deployment
+        uses: actions/deploy-pages@v4
