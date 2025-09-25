@@ -12,7 +12,7 @@ function initializeCourtManager() {
     } else {
         // fallback for standalone usage
         courtManager = { generateStorageKey: () => 'volleyballScoreData' };
-        courtInfo = { id: '001', name: '1구장' };
+        courtInfo = { id: '002', name: '2구장' };
     }
 }
 

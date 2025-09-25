@@ -30,23 +30,26 @@
                 <h1 id="teamB-name-display" class="team-name">Away</h1>
             </div>
             
-            <!-- 3단계: 스코어와 세트스코어 영역 -->
+            <!-- 3단계: 스코어와 세트정보 영역 -->
             <div class="scores-section">
-                <p id="teamA-point-display" class="display-point">0</p>
-                <div id="set-score-display" class="display-set-score">0 - 0</div>
-                <p id="teamB-point-display" class="display-point">0</p>
-            </div>
-            
-            <!-- 4단계: 작전타임과 세트정보 영역 -->
-            <div class="bottom-section">
-                <div class="display-timeout-indicators">
-                    <div id="display-teamA-timeout-1" class="timeout-circle"></div>
-                    <div id="display-teamA-timeout-2" class="timeout-circle"></div>
+                <div class="team-score-container">
+                    <div class="set-icons-vertical">
+                        <div id="display-teamA-set-1" class="set-circle"></div>
+                        <div id="display-teamA-set-2" class="set-circle"></div>
+                        <div id="display-teamA-set-3" class="set-circle"></div>
+                    </div>
+                    <p id="teamA-point-display" class="display-point">0</p>
                 </div>
-                <div id="current-set-display" class="current-set-display">1세트</div>
-                <div class="display-timeout-indicators">
-                    <div id="display-teamB-timeout-1" class="timeout-circle"></div>
-                    <div id="display-teamB-timeout-2" class="timeout-circle"></div>
+                <div class="set-info-container">
+                    <div id="current-set-display" class="current-set-display">1세트</div>
+                </div>
+                <div class="team-score-container">
+                    <p id="teamB-point-display" class="display-point">0</p>
+                    <div class="set-icons-vertical">
+                        <div id="display-teamB-set-1" class="set-circle"></div>
+                        <div id="display-teamB-set-2" class="set-circle"></div>
+                        <div id="display-teamB-set-3" class="set-circle"></div>
+                    </div>
                 </div>
             </div>
             
@@ -66,6 +69,17 @@
             </div>
         </div>
     </div>
+    
+    <!-- 작전타임 표시 영역 (스코어보드 밖에 독립적으로 배치) -->
+    <div id="timeout-display-area" class="timeout-display-area">
+        <div id="timeout-teamA" class="timeout-indicator timeout-teamA" style="display: none;">
+            TIME OUT 1
+        </div>
+        <div id="timeout-teamB" class="timeout-indicator timeout-teamB" style="display: none;">
+            TIME OUT 2
+        </div>
+    </div>
+    
     <script src="../../../../js/utils.js"></script>
     <script src="../../../../js/court-manager.js"></script>
     <script src="../shared/display.js"></script> 
