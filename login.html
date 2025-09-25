@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배구 스코어보드 로그인</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <!-- 헤더 섹션 -->
+        <div class="header">
+            <div class="volleyball-icon">🏐</div>
+            <h1>배구 스코어보드 시스템</h1>
+            <p class="subtitle">심판용 관리 시스템</p>
+        </div>
+
+        <!-- 로그인 폼 -->
+        <div class="login-form-container">
+            <div class="form-header">
+                <h2>구장 로그인</h2>
+                <p>해당 구장의 계정으로 로그인하세요</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="input-group">
+                    <label for="courtId">구장 선택</label>
+                    <select id="courtId" name="courtId" required>
+                        <option value="">구장을 선택하세요</option>
+                        <option value="001">1구장</option>
+                        <option value="002">2구장</option>
+                        <option value="003">3구장</option>
+                        <option value="004">4구장</option>
+                        <option value="005">5구장</option>
+                        <option value="006">6구장</option>
+                        <option value="007">7구장</option>
+                        <option value="008">8구장</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <span class="btn-icon">🏐</span>
+                    로그인
+                </button>
+            </form>
+
+            <!-- 로그인 상태 메시지 -->
+            <div id="loginMessage" class="message"></div>
+
+            <!-- 구장별 계정 정보 -->
+            <div class="account-info">
+                <h3>구장별 계정 정보</h3>
+                <div class="account-grid">
+                    <div class="account-item">
+                        <span class="court-number">1구장</span>
+                        <span class="account-details">ID: court001 | PW: court001</span>
+                    </div>
+                    <div class="account-item">
+                        <span class="court-number">2구장</span>
+                        <span class="account-details">ID: court002 | PW: court002</span>
+                    </div>
+                    <div class="account-item">
+                        <span class="court-number">3구장</span>
+                        <span class="account-details">ID: court003 | PW: court003</span>
+                    </div>
+                    <div class="account-item">
+                        <span class="court-number">4구장</span>
+                        <span class="account-details">ID: court004 | PW: court004</span>
+                    </div>
+                    <div class="account-item">
+                        <span class="court-number">5구장</span>
+                        <span class="account-details">ID: court005 | PW: court005</span>
+                    </div>
+                    <div class="account-item">
+                        <span class="court-number">6구장</span>
+                        <span class="account-details">ID: court006 | PW: court006</span>
+                    </div>
+                    <div class="account-item">
+                        <span class="court-number">7구장</span>
+                        <span class="account-details">ID: court007 | PW: court007</span>
+                    </div>
+                    <div class="account-item">
+                        <span class="court-number">8구장</span>
+                        <span class="account-details">ID: court008 | PW: court008</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="footer">
+            <p>© 2024 배구 스코어보드 시스템 - 심판용</p>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

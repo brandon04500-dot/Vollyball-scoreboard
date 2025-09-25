@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>3구장 스코어보드 (송출용)</title>
+    <link rel="stylesheet" href="../shared/display.css?v=2.4&t=20241222">
+    <style>
+        /* 디버깅 정보 숨기기 */
+        #debug-info {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="display-board">
+            <!-- 1단계: 대회명 영역 -->
+            <div class="tournament-section">
+                <h2 id="tournament-name-display">대회 이름</h2>
+            </div>
+            
+            <!-- 2단계: 팀명과 서브권 영역 -->
+            <div class="teams-section">
+                <h1 id="teamA-name-display" class="team-name">Home</h1>
+                <div id="serve-triangle-display" class="serve-triangle">▲</div>
+                <h1 id="teamB-name-display" class="team-name">Away</h1>
+            </div>
+            
+            <!-- 3단계: 스코어와 세트정보 영역 -->
+            <div class="scores-section">
+                <div class="team-score-container">
+                    <div class="set-icons-vertical">
+                        <div id="display-teamA-set-1" class="set-circle"></div>
+                        <div id="display-teamA-set-2" class="set-circle"></div>
+                        <div id="display-teamA-set-3" class="set-circle"></div>
+                    </div>
+                    <p id="teamA-point-display" class="display-point">0</p>
+                </div>
+                <div class="set-info-container">
+                    <div id="current-set-display" class="current-set-display">1세트</div>
+                </div>
+                <div class="team-score-container">
+                    <p id="teamB-point-display" class="display-point">0</p>
+                    <div class="set-icons-vertical">
+                        <div id="display-teamB-set-1" class="set-circle"></div>
+                        <div id="display-teamB-set-2" class="set-circle"></div>
+                        <div id="display-teamB-set-3" class="set-circle"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 비디오 판독 그래픽 -->
+            <div id="video-review-overlay" class="video-review-overlay" style="display: none;">
+                <div class="video-review-graphic">
+                    <div class="video-review-icon">📹</div>
+                    <div class="video-review-text">비디오 판독 중입니다</div>
+                </div>
+            </div>
+            
+            <!-- OBS 디버깅 정보 (개발용) -->
+            <div id="debug-info" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 5px; font-size: 12px; border-radius: 3px; z-index: 1000;">
+                <div>OBS 디버그</div>
+                <div id="debug-status">연결 중...</div>
+                <div id="debug-time">시간: --</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 작전타임 표시 영역 (스코어보드 밖에 독립적으로 배치) -->
+    <div id="timeout-display-area" class="timeout-display-area">
+        <div id="timeout-teamA" class="timeout-indicator timeout-teamA" style="display: none;">
+            TIME OUT 1
+        </div>
+        <div id="timeout-teamB" class="timeout-indicator timeout-teamB" style="display: none;">
+            TIME OUT 2
+        </div>
+    </div>
+    
+    <script src="../../../../js/utils.js"></script>
+    <script src="../../../../js/court-manager.js"></script>
+    <script src="../shared/display.js"></script> 
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>4구장 스코어보드 (송출용)</title>
+    <link rel="stylesheet" href="../shared/display.css?v=2.4&t=20241222">
+    <style>
+        /* 디버깅 정보 숨기기 */
+        #debug-info {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="display-board">
+            <!-- 1단계: 대회명 영역 -->
+            <div class="tournament-section">
+                <h2 id="tournament-name-display">대회 이름</h2>
+            </div>
+            
+            <!-- 2단계: 팀명과 서브권 영역 -->
+            <div class="teams-section">
+                <h1 id="teamA-name-display" class="team-name">Home</h1>
+                <div id="serve-triangle-display" class="serve-triangle">▲</div>
+                <h1 id="teamB-name-display" class="team-name">Away</h1>
+            </div>
+            
+            <!-- 3단계: 스코어와 세트스코어 영역 -->
+            <div class="scores-section">
+                <p id="teamA-point-display" class="display-point">0</p>
+                <div id="set-score-display" class="display-set-score">0 - 0</div>
+                <p id="teamB-point-display" class="display-point">0</p>
+            </div>
+            
+            <!-- 4단계: 작전타임과 세트정보 영역 -->
+            <div class="bottom-section">
+                <div class="display-timeout-indicators">
+                    <div id="display-teamA-timeout-1" class="timeout-circle"></div>
+                    <div id="display-teamA-timeout-2" class="timeout-circle"></div>
+                </div>
+                <div id="current-set-display" class="current-set-display">1세트</div>
+                <div class="display-timeout-indicators">
+                    <div id="display-teamB-timeout-1" class="timeout-circle"></div>
+                    <div id="display-teamB-timeout-2" class="timeout-circle"></div>
+                </div>
+            </div>
+            
+            <!-- 비디오 판독 그래픽 -->
+            <div id="video-review-overlay" class="video-review-overlay" style="display: none;">
+                <div class="video-review-graphic">
+                    <div class="video-review-icon">📹</div>
+                    <div class="video-review-text">비디오 판독 중입니다</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../../../js/utils.js"></script>
+    <script src="../../../../js/court-manager.js"></script>
+    <script src="../shared/display.js"></script> 
+</body>
+</html>

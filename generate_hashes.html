@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 해시 생성기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 배구 스코어보드 비밀번호 해시 생성기</h1>
+        
+        <div class="warning">
+            <strong>⚠️ 주의사항:</strong><br>
+            이 도구는 개발/테스트용입니다. 실제 운영 환경에서는 서버사이드에서 안전한 해싱을 사용하세요.
+        </div>
+
+        <div class="input-group">
+            <label for="password">원본 비밀번호:</label>
+            <input type="text" id="password" placeholder="예: court001" value="court001">
+        </div>
+
+        <button onclick="generateHash()">해시 생성</button>
+
+        <div class="result" id="result">
+            해시를 생성하려면 위의 버튼을 클릭하세요.
+        </div>
+
+        <div class="input-group">
+            <label for="allHashes">모든 구장 해시 (복사용):</label>
+            <button onclick="generateAllHashes()">모든 구장 해시 생성</button>
+            <textarea id="allHashes" rows="15" style="width: 100%; margin-top: 10px; font-family: monospace; font-size: 12px;"></textarea>
+        </div>
+    </div>
+
+    <script>
+        // 간단한 해싱 함수 (실제 환경에서는 bcrypt 등 사용 권장)
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password + 'volleyball_salt_2024');
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function generateHash() {
+            const password = document.getElementById('password').value;
+            if (!password) {
+                alert('비밀번호를 입력해주세요.');
+                return;
+            }
+
+            try {
+                const hash = await hashPassword(password);
+                document.getElementById('result').textContent = `비밀번호: ${password}\n해시: ${hash}`;
+            } catch (error) {
+                document.getElementById('result').textContent = `오류: ${error.message}`;
+            }
+        }
+
+        async function generateAllHashes() {
+            const passwords = [
+                'court001', 'court002', 'court003', 'court004',
+                'court005', 'court006', 'court007', 'court008'
+            ];
+
+            let result = '// 구장별 해시된 비밀번호\nconst courtAccounts = {\n';
+            
+            try {
+                for (let i = 0; i < passwords.length; i++) {
+                    const password = passwords[i];
+                    const hash = await hashPassword(password);
+                    const courtId = (i + 1).toString().padStart(3, '0');
+                    result += `    '${courtId}': { passwordHash: '${hash}', name: '${i + 1}구장' },\n`;
+                }
+                result += '};';
+                
+                document.getElementById('allHashes').value = result;
+            } catch (error) {
+                document.getElementById('allHashes').value = `오류: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

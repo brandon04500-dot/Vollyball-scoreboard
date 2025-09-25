@@ -1,0 +1,318 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: transparent;
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100vh;
+    padding: 10px;
+    padding-left: 60px;
+    padding-top: 30px;
+}
+
+.display-board {
+    background: rgba(44, 44, 44, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    width: 440px;
+    height: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* 1단계: 대회명 영역 */
+.tournament-section {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#tournament-name-display {
+    font-size: 22px;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* 2단계: 팀명과 서브권 영역 */
+.teams-section {
+    background: #1a1a1a;
+    padding: 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #555555;
+    height: 60px;
+    position: relative;
+}
+
+/* 3단계: 스코어와 세트스코어 영역 */
+.scores-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 50px 8px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    height: 55px;
+}
+
+/* 4단계: 작전타임과 세트정보 영역 */
+.bottom-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 50px 5px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 45px;
+}
+
+/* 기존 main-score-area는 더 이상 사용하지 않음 */
+
+/* 팀명 스타일 (teams-section 내부) */
+.team-name {
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+    flex: 1;
+    max-width: 45%;
+}
+
+.team-name.team-a {
+    text-align: left !important;
+    padding-left: 0 !important;
+    margin-left: -50px !important;
+    transform: translateX(-30px) !important;
+}
+
+/* 스코어 스타일 (scores-section 내부) */
+.display-point {
+    font-size: 52px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+}
+
+.display-set-score {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    text-align: center;
+    flex: 1;
+}
+
+/* 하단 스타일 (bottom-section 내부) */
+
+.display-timeout-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 3px;
+    flex: 1;
+}
+
+.current-set-display {
+    font-size: 22px;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    margin: 0;
+    text-align: center;
+    flex: 1;
+}
+
+.timeout-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #333;
+    border: 2px solid #666;
+    transition: all 0.3s ease;
+}
+
+/* 서브 삼각형 */
+.serve-triangle {
+    font-size: 24px;
+    color: #ff6b35;
+    text-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
+    transition: all 0.3s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    z-index: 10;
+}
+
+.serve-triangle.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.serve-triangle.team-a {
+    color: #ff6b35;
+    text-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
+    transform: translate(-50%, -50%) rotate(-90deg) scale(1);
+}
+
+.serve-triangle.team-b {
+    color: #ff6b35;
+    text-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
+    transform: translate(-50%, -50%) rotate(90deg) scale(1);
+}
+
+/* 비디오 판독 오버레이 */
+.video-review-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    border-radius: 10px;
+}
+
+.video-review-graphic {
+    text-align: center;
+    padding: 15px 20px;
+    border: 3px solid #ffd700;
+    border-radius: 15px;
+    background: rgba(255, 215, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.video-review-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.video-review-text {
+    font-size: 20px;
+    color: #ffd700;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 8px;
+}
+
+/* 애니메이션 */
+@keyframes pulse {
+    0% {
+        transform: translateY(-50%) scale(1);
+        box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+    }
+    50% {
+        transform: translateY(-50%) scale(1.2);
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+    }
+    100% {
+        transform: translateY(-50%) scale(1);
+        box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+    }
+}
+
+@keyframes scoreUpdate {
+    0% { 
+        transform: scale(1); 
+        color: #ffd700;
+    }
+    50% { 
+        transform: scale(1.2); 
+        color: #00ff00;
+    }
+    100% { 
+        transform: scale(1); 
+        color: #ffd700;
+    }
+}
+
+/* 코트체인지 애니메이션 제거됨 (모션 없이 즉시 변경) */
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+    .display-board {
+        width: 400px;
+        height: 160px;
+        padding: 8px;
+    }
+    
+    .team-display h1 {
+        font-size: 18px;
+    }
+    
+    .display-point {
+        font-size: 28px;
+    }
+    
+    .display-set-score {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 360px) {
+    .display-board {
+        width: 320px;
+        height: 140px;
+        padding: 6px;
+    }
+    
+    .team-display h1 {
+        font-size: 16px;
+    }
+    
+    .display-point {
+        font-size: 24px;
+    }
+    
+    .display-set-score {
+        font-size: 16px;
+    }
+}

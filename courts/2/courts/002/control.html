@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2구장 심판용 스코어보드 관리</title>
+    <link rel="stylesheet" href="../shared/control.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏐 2구장 심판용 배구 스코어보드</h1>
+        
+        <!-- 구장 정보 표시 -->
+        <div class="court-info">
+            🏟️ 2구장 (Court 002)
+        </div>
+
+        <!-- 현재 스코어 표시 -->
+        <div class="control-section">
+            <div class="score-display">
+                <div class="team-score">
+                    <h3 id="current-team-a" style="cursor: pointer;">Home</h3>
+                    <div class="score" id="current-score-a">0</div>
+                </div>
+                <div class="center-info">
+                    <div class="tournament-info" id="current-tournament" style="cursor: pointer;">대회 이름</div>
+                    <div class="set-score" id="current-set-score">0 - 0</div>
+                    <div class="current-set-info" id="current-set-display">1세트</div>
+                    <div class="serve-info" id="current-serve">서브: 팀 A</div>
+                </div>
+                <div class="team-score">
+                    <h3 id="current-team-b" style="cursor: pointer;">Away</h3>
+                    <div class="score" id="current-score-b">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 간결한 컨트롤 패널 -->
+        <div class="control-panel">
+            <!-- 팀 A 컨트롤 -->
+            <div class="team-controls team-a">
+                <h3>점수</h3>
+                <div class="score-controls">
+                    <button class="btn btn-score-up" onclick="quickScore('A', 1)">▲</button>
+                    <button class="btn btn-score-down" onclick="quickScore('A', -1)">▼</button>
+                </div>
+                
+                <h3>세트</h3>
+                <div class="set-controls">
+                    <button class="btn btn-set-up" onclick="updateSetScore('A', 1)">▲</button>
+                    <button class="btn btn-set-down" onclick="updateSetScore('A', -1)">▼</button>
+                </div>
+                
+                <h3>작전타임</h3>
+                <div class="timeout-indicators">
+                    <button class="timeout-dot" id="team-a-timeout-1" onclick="toggleTeamTimeout('A')"></button>
+                    <button class="timeout-dot" id="team-a-timeout-2" onclick="toggleTeamTimeout('A')"></button>
+                </div>
+            </div>
+            
+            <!-- 중앙 컨트롤 -->
+            <div class="center-controls">
+                <button class="btn btn-reset" onclick="resetCurrentScore()">점수초기화</button>
+                <button class="btn btn-video-review" onclick="requestVideoReview('general')">비디오 판독</button>
+                <button class="btn btn-court-change" onclick="changeCourt()">코트체인지</button>
+            </div>
+            
+            <!-- 팀 B 컨트롤 -->
+            <div class="team-controls team-b">
+                <h3>점수</h3>
+                <div class="score-controls">
+                    <button class="btn btn-score-up" onclick="quickScore('B', 1)">▲</button>
+                    <button class="btn btn-score-down" onclick="quickScore('B', -1)">▼</button>
+                </div>
+                
+                <h3>세트</h3>
+                <div class="set-controls">
+                    <button class="btn btn-set-up" onclick="updateSetScore('B', 1)">▲</button>
+                    <button class="btn btn-set-down" onclick="updateSetScore('B', -1)">▼</button>
+                </div>
+                
+                <h3>작전타임</h3>
+                <div class="timeout-indicators">
+                    <button class="timeout-dot" id="team-b-timeout-1" onclick="toggleTeamTimeout('B')"></button>
+                    <button class="timeout-dot" id="team-b-timeout-2" onclick="toggleTeamTimeout('B')"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 전체 초기화 -->
+        <div class="control-section">
+            <div class="button-group">
+                <button class="btn btn-danger" onclick="openSetupModal()">전체 초기화</button>
+            </div>
+        </div>
+
+        <div id="status" class="status" style="display: none;"></div>
+    </div>
+
+    <!-- 설정 모달 -->
+    <div id="setupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 대회 정보 설정</h2>
+                <span class="close" onclick="closeSetupModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modal-tournament-name">대회 이름 (30자 이하):</label>
+                    <input type="text" id="modal-tournament-name" placeholder="대회 이름을 입력하세요" maxlength="30" oninput="updateTournamentNameLength(this.value)">
+                    <div id="tournament-length-warning" class="length-warning" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="modal-team-a-name">홈팀 이름 (8자 이하):</label>
+                    <input type="text" id="modal-team-a-name" placeholder="홈팀 이름을 입력하세요" maxlength="8" oninput="updateTeamNameLength(this.value, 'A')">
+                    <div id="team-a-length-warning" class="length-warning" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="modal-team-b-name">어웨이팀 이름 (8자 이하):</label>
+                    <input type="text" id="modal-team-b-name" placeholder="어웨이팀 이름을 입력하세요" maxlength="8" oninput="updateTeamNameLength(this.value, 'B')">
+                    <div id="team-b-length-warning" class="length-warning" style="display: none;"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveSetup()">설정 저장</button>
+                <button class="btn btn-secondary" onclick="closeSetupModal()">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 수정 모달 -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="editModalTitle">정보 수정</h2>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label id="editModalLabel">항목:</label>
+                    <input type="text" id="editModalInput" placeholder="수정할 내용을 입력하세요" oninput="updateEditModalLength(this.value)">
+                    <div id="edit-length-warning" class="length-warning" style="display: none;"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveEdit()">수정 확인</button>
+                <button class="btn btn-secondary" onclick="closeEditModal()">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비디오 판독 오버레이 -->
+    <div id="videoReviewOverlay" class="video-review-overlay" style="display: none;">
+        <div class="video-review-graphic">
+            <div class="video-review-icon">📹</div>
+            <div class="video-review-text">비디오 판독 중입니다</div>
+            <button class="end-button" onclick="endVideoReview()">판독 종료</button>
+        </div>
+    </div>
+
+    <script src="../../../../js/utils.js"></script>
+    <script src="../../../../js/court-manager.js"></script>
+    <script src="../shared/control.js"></script>
+</body>
+</html>
